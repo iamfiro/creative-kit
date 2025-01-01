@@ -1,6 +1,6 @@
 {
   "name": "creative-kit",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "creative-kit for react developers (design-system)",
   "main": "index.js",
   "scripts": {
