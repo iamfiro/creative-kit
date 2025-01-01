@@ -2,10 +2,14 @@
     "name": "@creative-kit/react",
     "version": "0.0.1",
     "description": "React component libray",
-    "main": "index.js",
+    "main": "dist/index.js",
+    "module": "dist/index.esm.js",
+    "types": "dist/index.d.ts",
+    "private": false,
     "scripts": {
         "storybook": "storybook dev -p 6006",
-        "build-storybook": "storybook build"
+        "build-storybook": "storybook build",
+        "rollup:build": "rollup -c"
     },
     "keywords": [
         "creative",
@@ -40,5 +44,8 @@
         "prop-types": "15.8.1",
         "storybook": "8.4.7",
         "react": "^18.2.0"
-    }
+    },
+    "files": [
+        "dist"
+    ]
 }
