@@ -41,8 +41,5 @@
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-typescript2": "^0.36.0",
     "typescript": "^5.7.2"
-  },
-  "dependencies": {
-    "react": "^19.0.0"
   }
 }
