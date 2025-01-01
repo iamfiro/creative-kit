@@ -44,6 +44,9 @@ importers:
 
   packages/react:
     dependencies:
+      classnames:
+        specifier: ^2.5.1
+        version: 2.5.1
       next:
         specifier: '>=14.0.0'
         version: 15.1.3(@babel/core@7.26.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -1331,6 +1334,9 @@ packages:
 
   cjs-module-lexer@1.4.1:
     resolution: {integrity: sha512-cuSVIHi9/9E/+821Qjdvngor+xpnlwnuwIyZOaLmHBVdXL+gP+I6QQB9VkO7RI77YIcTV+S1W9AreJ5eN63JBA==}
+
+  classnames@2.5.1:
+    resolution: {integrity: sha512-saHYOzhIQs6wy2sVxTM6bUDsQO4F50V9RQ22qBpEdCW+I+/Wmke2HOl6lS6dTpdxVhb88/I6+Hs+438c3lfUow==}
 
   clean-css@5.3.3:
     resolution: {integrity: sha512-D5J+kHaVb/wKSFcyyV75uCn8fiY4sV38XJoe4CUyGQ+mOU/fMVYUdH1hJC+CJQ5uY3EnW27SbJYS4X8BiLrAFg==}
@@ -4310,6 +4316,8 @@ snapshots:
   chrome-trace-event@1.0.4: {}
 
   cjs-module-lexer@1.4.1: {}
+
+  classnames@2.5.1: {}
 
   clean-css@5.3.3:
     dependencies:
