@@ -7,6 +7,13 @@ settings:
 importers:
 
   .:
+    dependencies:
+      react:
+        specifier: ^19.0.0
+        version: 19.0.0
+      typescript:
+        specifier: ^5.7.2
+        version: 5.7.2
     devDependencies:
       '@commitlint/cli':
         specifier: ^19.6.1
@@ -17,6 +24,8 @@ importers:
       husky:
         specifier: ^9.1.7
         version: 9.1.7
+
+  packages/react: {}
 
 packages:
 
@@ -336,6 +345,10 @@ packages:
 
   picocolors@1.1.1:
     resolution: {integrity: sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==}
+
+  react@19.0.0:
+    resolution: {integrity: sha512-V8AVnmPIICiWpGfm6GLzCR/W5FXLchHop40W4nXBmdlEceh16rCN8O8LNWm5bh5XUX91fh7KpA+W0TgMKmgTpQ==}
+    engines: {node: '>=0.10.0'}
 
   require-directory@2.1.1:
     resolution: {integrity: sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q==}
@@ -737,6 +750,8 @@ snapshots:
   path-exists@5.0.0: {}
 
   picocolors@1.1.1: {}
+
+  react@19.0.0: {}
 
   require-directory@2.1.1: {}
 
