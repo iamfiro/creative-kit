@@ -54,6 +54,7 @@
     ],
     "dependencies": {
         "classnames": "^2.5.1",
+        "css": "^3.0.0",
         "sass": "^1.83.0"
     }
 }
