@@ -1,0 +1,30 @@
+{
+  "name": "creative-kit",
+  "version": "0.1.0",
+  "description": "creative-kit for react developers (design-system)",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [
+    "creative",
+    "kit",
+    "react",
+    "design",
+    "native",
+    "hooks",
+    "ui",
+    "components",
+    "library"
+  ],
+  "author": {
+    "name": "Sungju Cho",
+    "email": "hello@devfiro.com",
+    "url": "https://github.com/iamfiro"
+  },
+  "contributors": [],
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  ]
+}
