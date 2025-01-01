@@ -11,9 +11,6 @@ importers:
       react:
         specifier: ^19.0.0
         version: 19.0.0
-      typescript:
-        specifier: ^5.7.2
-        version: 5.7.2
     devDependencies:
       '@commitlint/cli':
         specifier: ^19.6.1
@@ -24,6 +21,9 @@ importers:
       husky:
         specifier: ^9.1.7
         version: 9.1.7
+      typescript:
+        specifier: ^5.7.2
+        version: 5.7.2
 
   packages/react:
     devDependencies:
