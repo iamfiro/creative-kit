@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+      "target": "es6",
+      "module": "esnext",
+      "lib": ["dom", "dom.Iterable", "esnext"],
+      "declaration": true,
+      "declarationDir": "dist",
+      "emitDeclarationOnly": false,
+      "outDir": "dist",
+      "rootDir": "src",
+      "jsx": "react",
+      "moduleResolution": "node",
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "strict": true
+    },
+    "include": ["src"],
+    "exclude": ["node_modules", "dist"]
+  }

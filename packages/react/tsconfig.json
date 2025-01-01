@@ -1,0 +1,31 @@
+{
+    "compilerOptions": {
+      "target": "es6",
+      "module": "esnext",
+      "lib": ["dom", "dom.Iterable", "esnext"],
+      "allowJs": true,
+      "skipLibCheck": true,
+      "strict": true,
+      "noEmit": false,
+      "esModuleInterop": true,
+      "moduleResolution": "node",
+      "resolveJsonModule": true,
+      "isolatedModules": true,
+      "jsx": "react",
+      "declaration": true,
+      "declarationDir": "dist",
+      "emitDeclarationOnly": false,
+      "outDir": "dist",
+      "incremental": true,
+      "composite": true,
+      "forceConsistentCasingInFileNames": true,
+      "rootDir": "src",
+      "plugins": [
+        {
+          "name": "next"
+        }
+      ],
+    },
+    "include": ["src"],
+    "exclude": ["node_modules", "dist"]
+  }
