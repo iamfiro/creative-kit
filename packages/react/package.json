@@ -1,0 +1,27 @@
+{
+    "name": "@creative-kit/react",
+    "version": "0.0.1",
+    "description": "React component libray",
+    "main": "index.js",
+    "scripts": {
+      
+    },
+    "keywords": [
+      "creative",
+      "kit",
+      "react",
+      "design",
+      "native",
+      "hooks",
+      "ui",
+      "components",
+      "library"
+    ],
+    "author": {
+      "name": "Sungju Cho",
+      "email": "hello@devfiro.com",
+      "url": "https://github.com/iamfiro"
+    },
+    "license": "MIT"
+  }
+  
