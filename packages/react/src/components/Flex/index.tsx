@@ -3,7 +3,7 @@ import { BaseLayoutProps, LayoutSizeProps } from "../../types/layout";
 import cn from "classnames";
 import s from './style.module.scss';
 
-interface FlexProps extends BaseLayoutProps, Partial<LayoutSizeProps> {
+export interface FlexProps extends BaseLayoutProps, Partial<LayoutSizeProps> {
     as?: ElementType;
     direction?: "row" | "column";
     justify?: "start" | "end" | "center" | "between" | "around";
