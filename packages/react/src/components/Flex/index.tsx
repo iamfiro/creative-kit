@@ -39,12 +39,14 @@ export const Flex = forwardRef(function Flex(props: FlexProps, ref: Ref<any>) {
                 [s.alignCenter]: align === "center",
                 [s.alignStretch]: align === "stretch",
                 [s.wrap]: wrap === "wrap",
-                [s.gap]: gap,
                 [s.fullHeight]: fullHeight,
                 [s.fullWidth]: fullWidth,
             },
             className
         ),
-        style,
+        style: {
+            ...style,
+            gap: gap ? `${gap}px` : undefined,
+        },
     }, children);
 })
