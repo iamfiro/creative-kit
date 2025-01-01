@@ -7,7 +7,7 @@ export interface BaseLayoutProps {
 }
 
 export interface LayoutSizeProps {
-    fullWidth?: boolean;
-    fullHeight?: boolean;
-    fitContent?: boolean;
+    fullWidth: boolean;
+    fullHeight: boolean;
+    fitContent: boolean;
 }
