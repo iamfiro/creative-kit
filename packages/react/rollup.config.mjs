@@ -2,7 +2,8 @@ import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
-import { terser } from 'rollup-plugin-terser';
+import terser from '@rollup/plugin-terser';
+import postcss from 'rollup-plugin-postcss';
 import { readFileSync } from 'fs';
 
 const packageJson = JSON.parse(
@@ -32,7 +33,8 @@ const config = {
       tsconfig: './tsconfig.json',
       exclude: ['**/*.stories.tsx', '**/*.test.tsx']
     }),
-    terser()
+    terser(),
+    postcss({ extract: true })
   ],
   external: ['react', 'react-dom']
 };
