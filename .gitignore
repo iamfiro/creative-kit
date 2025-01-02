@@ -11,3 +11,5 @@ dist/
 
 storybook-static/
 *storybook.log
+
+.tsconfig.tsbuildinfo
