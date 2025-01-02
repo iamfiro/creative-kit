@@ -1,11 +1,5 @@
 /* Auto-generated code. DO NOT modify directly. */
 /* To make changes, edit src/token/token.json */
 
-:root {
-    /* color */
-
-    /* spacing */
-
-    /* breakpoint */
-
-}
+export const Breakpoint = {
+};
