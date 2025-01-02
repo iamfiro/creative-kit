@@ -1,6 +1,7 @@
 import { constants } from 'buffer';
 import fs from 'fs';
 import { ensureDirectoryExists } from './shared';
+import path from 'path';
 
 type ThemeValue = string | number;
 type TokenCategory = Record<string, ThemeValue> | { light: Record<string, ThemeValue>; dark: Record<string, ThemeValue> };
@@ -8,10 +9,10 @@ type TokenStructure = Record<string, TokenCategory>;
 
 const CONFIG = {
     variablePrefix: 'ck',
-    tokenPath: './src/token/token.json',
+    tokenPath: path.resolve(__dirname, '../src/token/token.json'),
     output: {
-        constants: './src/constants',
-        css: './src/styles/base.css',
+        constants: path.resolve(__dirname, '../src/constants'),
+        css: path.resolve(__dirname, '../src/styles/base.css')
     }
 } as const;
 
