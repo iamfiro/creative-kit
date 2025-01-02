@@ -16,6 +16,21 @@ const CONFIG = {
     }
 } as const;
 
+// Function to remove directory and its contents
+function removeDirectory(dirPath: string) {
+    if (fs.existsSync(dirPath)) {
+        fs.readdirSync(dirPath).forEach((file) => {
+            const curPath = path.join(dirPath, file);
+            if (fs.lstatSync(curPath).isDirectory()) {
+                removeDirectory(curPath);
+            } else {
+                fs.unlinkSync(curPath);
+            }
+        });
+        fs.rmdirSync(dirPath);
+    }
+}
+
 const tokenContent = JSON.parse(fs.readFileSync(CONFIG.tokenPath, 'utf8')) as TokenStructure;
 if(!tokenContent) {
     throw new Error('❌ 디자인 토큰 파일을 찾을 수 없습니다.');
@@ -80,6 +95,10 @@ function generateCSSVariables(category: string, values: TokenCategory): { light:
 }
 
 try {
+    // Remove existing constants directory
+    removeDirectory(CONFIG.output.constants);
+    console.log('✅ 기존 상수 디렉토리가 삭제되었습니다.');
+
     let cssContent = '/* Auto-generated code. DO NOT modify directly. */\n/* To make changes, edit src/token/token.json */\n\n:root {\n';
     const darkThemeVariables: string[] = [];
 
@@ -106,8 +125,8 @@ try {
 
     console.log('✅ CSS 파일이 생성되었습니다.');
 
-    // Write constants file
-    // sample.ts를 뒤에 추가 하는 이유는, (왜지 답 아시는 분은 PR 부탁드립니다)
+    // Create new constants directory and generate files
+    ensureDirectoryExists(CONFIG.output.constants);
     ensureDirectoryExists(CONFIG.output.constants + '/sample.ts');
 
     Object.entries(tokenContent).forEach(([category, values]) => {
@@ -119,7 +138,7 @@ try {
         fs.writeFileSync(`${CONFIG.output.constants}/${category}.ts`, constantsContent);
     });
 
-    console.log('✅ 상수 파일이 생성되었습니다.');
+    console.log('✅ 새로운 상수 파일이 생성되었습니다.');
 
 } catch (error) {
     throw new Error(`❌ 토큰 생성 중 오류가 발생했습니다.\n${error}`);
