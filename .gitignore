@@ -13,3 +13,5 @@ storybook-static/
 *storybook.log
 
 .tsconfig.tsbuildinfo
+
+package-lock.json
