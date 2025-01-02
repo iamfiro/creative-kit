@@ -1,4 +1,3 @@
-import { constants } from 'buffer';
 import fs from 'fs';
 import { ensureDirectoryExists } from './shared';
 import path from 'path';
