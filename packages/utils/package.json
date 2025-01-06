@@ -1,0 +1,37 @@
+{
+  "name": "@creative-kit/utils",
+  "version": "0.0.1",
+  "description": "basic utils library",
+  "private": false,
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iamfiro/creative-kit.git"
+  },
+  "keywords": [
+    "creative",
+    "kit",
+    "react",
+    "utils",
+    "library",
+    "hooks"
+  ],
+  "author": {
+    "name": "Sungju Cho",
+    "email": "hello@devfiro.com",
+    "url": "https://github.com/iamfiro"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/iamfiro/creative-kit/issues"
+  },
+  "files": [
+      "dist"
+  ],
+  "homepage": "https://github.com/iamfiro/creative-kit#readme"
+}
