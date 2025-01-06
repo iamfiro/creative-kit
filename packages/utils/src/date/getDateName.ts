@@ -1,4 +1,4 @@
-import { dateName } from "./date.locale"
+import { dateName } from "./index.locale"
 
 /**
  * 날짜를 받아 해당 요일의 이름을 반환합니다
