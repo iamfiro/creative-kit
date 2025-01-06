@@ -8,7 +8,7 @@ module.exports = {
         "react",
         "native",
         "hook",
-        "lib",
+        "utils",
         "workspace",
         "ci"
       ]],
