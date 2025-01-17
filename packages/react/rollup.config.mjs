@@ -34,7 +34,7 @@ const config = {
       exclude: ['**/*.stories.tsx', '**/*.test.tsx']
     }),
     terser(),
-    postcss({ extract: true })
+    postcss({ extract: 'styles.css' }) // specify the output CSS file name
   ],
   external: ['react', 'react-dom']
 };

@@ -27,8 +27,8 @@ export const Flex = forwardRef(function Flex(props: FlexProps, ref: Ref<any>) {
         className: cn(
             s.flexLayout,
             {
-                [s.flexRow]: direction === "row",
-                [s.flexColumn]: direction === "column",
+                [s.row]: direction === "row",
+                [s.column]: direction === "column",
                 [s.justifyStart]: justify === "start",
                 [s.justifyEnd]: justify === "end",
                 [s.justifyCenter]: justify === "center",

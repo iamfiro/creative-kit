@@ -1,6 +1,6 @@
 {
     "name": "@creative-kit/react",
-    "version": "0.0.2",
+    "version": "0.0.4",
     "description": "React component library",
     "main": "dist/index.js",
     "module": "dist/index.esm.js",

@@ -31,7 +31,7 @@ function removeDirectory(dirPath: string) {
 }
 
 const tokenContent = JSON.parse(fs.readFileSync(CONFIG.tokenPath, 'utf8')) as TokenStructure;
-if(!tokenContent) {
+if (!tokenContent) {
     throw new Error('❌ 디자인 토큰 파일을 찾을 수 없습니다.');
 }
 
@@ -46,7 +46,7 @@ function firstLetterToUpperCase(str: string) {
 function generateConstants(category: string, values: TokenCategory) {
     let variables = '';
 
-    if(isColorCategory(values)) {
+    if (isColorCategory(values)) {
         const lightValues = values.light;
         const darkValues = values.dark;
 
@@ -59,7 +59,7 @@ function generateConstants(category: string, values: TokenCategory) {
         });
 
         return variables;
-    };
+    }
 
     Object.entries(values).forEach(([key]) => {
         variables += `    ${key}: 'var(--${CONFIG.variablePrefix}-${category}-${key})',\n`;
@@ -71,7 +71,7 @@ function generateConstants(category: string, values: TokenCategory) {
 function generateCSSVariables(category: string, values: TokenCategory): { light: string; dark: string } {
     const formatValue = (value: string | number) => typeof value === 'number' ? `${value}px` : value;
 
-    if(isColorCategory(values)) {
+    if (isColorCategory(values)) {
         const lightCSS = Object.entries(values.light)
             .map(([key, value]) => `    --${CONFIG.variablePrefix}-${category}-${key}: ${formatValue(value)};\n`)
             .join('');
@@ -106,13 +106,13 @@ try {
         const cssVariables = generateCSSVariables(category, values);
         cssContent += `    /* ${category} */\n${cssVariables.light}\n`;
 
-        if(cssVariables.dark) {
+        if (cssVariables.dark) {
             darkThemeVariables.push(`    /* ${category} */\n${cssVariables.dark}\n`);
         }
     });
 
     // if dark theme variables exist, add them to the CSS file
-    if(darkThemeVariables.length > 0) {
+    if (darkThemeVariables.length > 0) {
         cssContent += '}\n\n/* Dark theme variables */\n[data-theme="dark"] {\n';
         cssContent += darkThemeVariables.join('\n');
     }
@@ -126,7 +126,6 @@ try {
 
     // Create new constants directory and generate files
     ensureDirectoryExists(CONFIG.output.constants);
-    ensureDirectoryExists(CONFIG.output.constants + '/sample.ts');
 
     Object.entries(tokenContent).forEach(([category, values]) => {
         let constantsContent = '/* Auto-generated code. DO NOT modify directly. */\n/* To make changes, edit src/token/token.json */\n\n';
