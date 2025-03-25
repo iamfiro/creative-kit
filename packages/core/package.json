@@ -1,13 +1,14 @@
 {
   "name": "@creative-kit/core",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "core of CreativeKit",
   "private": false,
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "rollup:build": "rollup -c"
+    "build": "rollup -c",
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -31,7 +32,13 @@
     "url": "https://github.com/iamfiro/creative-kit/issues"
   },
   "files": [
-      "dist"
+    "dist"
   ],
-  "homepage": "https://github.com/iamfiro/creative-kit#readme"
+  "homepage": "https://github.com/iamfiro/creative-kit#readme",
+  "dependencies": {
+    "@rollup/plugin-babel": "^6.0.4"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2"
+  }
 }

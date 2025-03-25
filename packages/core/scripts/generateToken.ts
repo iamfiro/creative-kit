@@ -316,6 +316,9 @@ try {
   // Ensure the constants directory exists first
   ensureDirectoryExists(CONFIG.output.constants);
 
+  // Track all generated constant files for index.ts generation
+  const generatedConstantFiles: string[] = [];
+
   // Semantic color constants (theme-aware)
   if (tokenContent.color?.semantic?.light) {
     const semanticConstants = generateSemanticConstants(
@@ -327,6 +330,7 @@ try {
     );
     // No need to call ensureDirectoryExists again since we already created the constants directory
     fs.writeFileSync(semanticColorsPath, semanticConstants);
+    generatedConstantFiles.push("semanticColors");
     console.log("✅ Semantic Color 상수 파일이 생성되었습니다.");
   }
 
@@ -341,12 +345,23 @@ try {
         const filePath = `${CONFIG.output.constants}/${category}.ts`;
         ensureDirectoryExists(path.dirname(filePath));
         fs.writeFileSync(filePath, constants);
+        generatedConstantFiles.push(category);
         console.log(
           `✅ ${firstLetterToUpperCase(category)} 상수 파일이 생성되었습니다.`
         );
       }
     }
   });
+
+  // Generate index.ts file that exports all constant files
+  const indexFileContent =
+    generatedConstantFiles
+      .map((file) => `export * from './${file}';`)
+      .join("\n") + "\n";
+
+  const indexFilePath = path.join(CONFIG.output.constants, "index.ts");
+  fs.writeFileSync(indexFilePath, indexFileContent);
+  console.log("✅ constants/index.ts 파일이 생성되었습니다.");
 } catch (error) {
   console.error(error);
   throw new Error(`❌ 토큰 생성 중 오류 발생: ${error}`);

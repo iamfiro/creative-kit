@@ -1,19 +1,24 @@
 {
-    "compilerOptions": {
-      "target": "es6",
-      "module": "esnext",
-      "lib": ["dom", "dom.Iterable", "esnext"],
-      "declaration": true,
-      "declarationDir": "dist",
-      "emitDeclarationOnly": false,
-      "outDir": "dist",
-      "rootDir": "src",
-      "jsx": "react",
-      "moduleResolution": "node",
-      "esModuleInterop": true,
-      "skipLibCheck": true,
-      "strict": true
-    },
-    "include": ["src"],
-    "exclude": ["node_modules", "dist"]
-  }
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "ESNext",
+    "lib": ["DOM", "DOM.Iterable", "ESNext.AsyncIterable"],
+    "declaration": true,
+    "declarationMap": true,
+    "declarationDir": "dist/types",
+    "emitDeclarationOnly": false,
+    "outDir": "dist",
+    "rootDir": "src",
+    "moduleResolution": "bundler",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "sourceMap": false,
+    "incremental": false,
+    "noEmit": false,
+    "preserveSymlinks": true
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+}

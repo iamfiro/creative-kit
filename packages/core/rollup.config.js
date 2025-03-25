@@ -1,24 +1,48 @@
 import resolve from '@rollup/plugin-node-resolve';
-import terser from '@rollup/plugin-terser';
 import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
+import peerDepsExternal from 'rollup-plugin-peer-deps-external';
+import terser from '@rollup/plugin-terser';
+import postcss from 'rollup-plugin-postcss';
+import { readFileSync } from 'fs';
+import babel from '@rollup/plugin-babel';
 
-export default {
-  input: 'src/index.ts', // 입력 파일 경로
+const packageJson = JSON.parse(
+    readFileSync(new URL('./package.json', import.meta.url)).toString()
+)
+
+const config = {
+  input: 'src/index.ts',
   output: [
     {
-      file: 'dist/index.js', // 출력 파일 경로
-      format: 'cjs', // CommonJS 형식
+      file: packageJson.main,
+      format: 'cjs',
+      sourcemap: true,
+      name: 'creative-kit-react'
     },
     {
-      file: 'dist/index.esm.js', // 출력 파일 경로
-      format: 'esm', // ES 모듈 형식
-    },
+      file: packageJson.module,
+      format: 'esm',
+      sourcemap: true
+    }
   ],
   plugins: [
-    resolve(), // Node 모듈을 가져오기 위한 플러그인
-    commonjs(), // CommonJS 모듈을 ES6로 변환하는 플러그인
-    typescript(), // TypeScript 파일을 컴파일하는 플러그인
-    terser(), // 코드 압축을 위한 플러그인
+    peerDepsExternal(),
+    resolve(),
+    commonjs(),
+    typescript({
+      tsconfig: './tsconfig.json',
+      exclude: ['**/*.stories.tsx', '**/*.test.tsx']
+    }),
+    terser(),
+    postcss({ extract: 'styles.css' }), // specify the output CSS file name
+    babel({
+      presets: ['@babel/preset-react'],
+      extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      babelHelpers: 'bundled'
+    })
   ],
+  external: ['react', 'react-dom']
 };
+
+export default config;
