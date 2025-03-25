@@ -7,6 +7,7 @@ module.exports = {
       "scope-enum": [2, "always", [
         "react",
         "native",
+        "core",
         "hook",
         "utils",
         "workspace",
