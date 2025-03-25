@@ -1,6 +1,6 @@
-import fs from 'fs';
-import { ensureDirectoryExists } from './shared';
-import path from 'path';
+import fs from "fs";
+import { ensureDirectoryExists } from "./shared";
+import path from "path";
 
 type ThemeValue = string | number;
 type SemanticTheme = Record<string, ThemeValue | Record<string, any>>;
@@ -22,19 +22,19 @@ type TokenStructure = {
 };
 
 const CONFIG = {
-  variablePrefix: 'ck',
-  tokenPath: path.resolve(__dirname, '../src/token/token.json'),
+  variablePrefix: "ck",
+  tokenPath: path.resolve(__dirname, "../src/token/token.json"),
   output: {
-    constants: path.resolve(__dirname, '../src/constants'),
-    css: path.resolve(__dirname, '../src/styles/base.css'),
+    constants: path.resolve(__dirname, "../src/constants"),
+    css: path.resolve(__dirname, "../src/styles/base.css"),
   },
 } as const;
 
 const tokenContent = JSON.parse(
-  fs.readFileSync(CONFIG.tokenPath, 'utf8')
+  fs.readFileSync(CONFIG.tokenPath, "utf8")
 ) as TokenStructure;
 if (!tokenContent) {
-  throw new Error('❌ 디자인 토큰 파일을 찾을 수 없습니다.');
+  throw new Error("❌ 디자인 토큰 파일을 찾을 수 없습니다.");
 }
 
 function firstLetterToUpperCase(str: string) {
@@ -48,15 +48,15 @@ function resolveTokenReference(
 ): string {
   // If not a reference, return as is
   if (
-    typeof value !== 'string' ||
-    !value.startsWith('{') ||
-    !value.endsWith('}')
+    typeof value !== "string" ||
+    !value.startsWith("{") ||
+    !value.endsWith("}")
   ) {
     return String(value);
   }
 
   // Extract path from reference (e.g., "color.foundation.neutral.100")
-  const path = value.slice(1, -1).split('.');
+  const path = value.slice(1, -1).split(".");
 
   // Navigate through token structure to get actual value
   let resolved: any = tokens;
@@ -69,14 +69,14 @@ function resolveTokenReference(
   }
 
   // If resolved to an object, it's likely a nested reference that needs further resolution
-  if (typeof resolved === 'object' && resolved !== null) {
+  if (typeof resolved === "object" && resolved !== null) {
     // For simple objects with "default" property, use that value
     if (resolved.default) {
       return resolveTokenReference(resolved.default, tokens);
     }
-    
+
     console.warn(`Warning: Token reference ${value} resolved to an object.`);
-    return ''; // Return empty string instead of [object Object]
+    return ""; // Return empty string instead of [object Object]
   }
 
   return String(resolved);
@@ -100,21 +100,23 @@ function generateFoundationCSSVariables(tokens: TokenStructure): string {
   // Process other token categories (like spacing, radius)
   Object.entries(tokens).forEach(([category, values]) => {
     if (
-      category !== 'color' &&
-      typeof values === 'object' &&
-      !('semantic' in values)
+      category !== "color" &&
+      typeof values === "object" &&
+      !("semantic" in values)
     ) {
-      if (category === 'typography') {
+      if (category === "typography") {
         // Handle typography objects specially - create individual properties
-        Object.entries(values as Record<string, any>).forEach(([typeName, typeProps]) => {
-          if (typeof typeProps === 'object' && typeProps !== null) {
-            Object.entries(typeProps).forEach(([propName, propValue]) => {
-              cssVars.push(
-                `    --${CONFIG.variablePrefix}-${category}-${typeName}-${propName}: ${propValue};`
-              );
-            });
+        Object.entries(values as Record<string, any>).forEach(
+          ([typeName, typeProps]) => {
+            if (typeof typeProps === "object" && typeProps !== null) {
+              Object.entries(typeProps).forEach(([propName, propValue]) => {
+                cssVars.push(
+                  `    --${CONFIG.variablePrefix}-${category}-${typeName}-${propName}: ${propValue};`
+                );
+              });
+            }
           }
-        });
+        );
       } else {
         // Handle simple token categories (spacing, radius, etc.)
         Object.entries(values as Record<string, ThemeValue>).forEach(
@@ -128,7 +130,7 @@ function generateFoundationCSSVariables(tokens: TokenStructure): string {
     }
   });
 
-  return cssVars.join('\n');
+  return cssVars.join("\n");
 }
 
 // Generate semantic CSS variables with proper handling of nested structures
@@ -139,15 +141,17 @@ function generateSemanticVariables(
   tokens: TokenStructure
 ): string[] {
   const cssVars: string[] = [];
-  
-  if (typeof values !== 'object' || values === null) {
+
+  if (typeof values !== "object" || values === null) {
     const resolvedValue = resolveTokenReference(values, tokens);
-    cssVars.push(`    --${CONFIG.variablePrefix}-${prefix}-${categoryName}: ${resolvedValue};`);
+    cssVars.push(
+      `    --${CONFIG.variablePrefix}-${prefix}-${categoryName}: ${resolvedValue};`
+    );
     return cssVars;
   }
-  
+
   Object.entries(values).forEach(([key, value]) => {
-    if (typeof value === 'object' && value !== null) {
+    if (typeof value === "object" && value !== null) {
       // Recursive handling for nested objects
       const nestedVars = generateSemanticVariables(
         `${prefix}-${categoryName}`,
@@ -158,10 +162,12 @@ function generateSemanticVariables(
       cssVars.push(...nestedVars);
     } else {
       const resolvedValue = resolveTokenReference(value as ThemeValue, tokens);
-      cssVars.push(`    --${CONFIG.variablePrefix}-${prefix}-${categoryName}-${key}: ${resolvedValue};`);
+      cssVars.push(
+        `    --${CONFIG.variablePrefix}-${prefix}-${categoryName}-${key}: ${resolvedValue};`
+      );
     }
   });
-  
+
   return cssVars;
 }
 
@@ -170,13 +176,20 @@ function generateLightThemeVariables(tokens: TokenStructure): string {
   const cssVars: string[] = [];
 
   if (tokens.color?.semantic?.light) {
-    Object.entries(tokens.color.semantic.light).forEach(([category, values]) => {
-      const categoryVars = generateSemanticVariables('color-semantic', category, values, tokens);
-      cssVars.push(...categoryVars);
-    });
+    Object.entries(tokens.color.semantic.light).forEach(
+      ([category, values]) => {
+        const categoryVars = generateSemanticVariables(
+          "color-semantic",
+          category,
+          values,
+          tokens
+        );
+        cssVars.push(...categoryVars);
+      }
+    );
   }
 
-  return cssVars.join('\n');
+  return cssVars.join("\n");
 }
 
 // Dark theme semantic variables
@@ -185,12 +198,17 @@ function generateDarkThemeVariables(tokens: TokenStructure): string {
 
   if (tokens.color?.semantic?.dark) {
     Object.entries(tokens.color.semantic.dark).forEach(([category, values]) => {
-      const categoryVars = generateSemanticVariables('color-semantic', category, values, tokens);
+      const categoryVars = generateSemanticVariables(
+        "color-semantic",
+        category,
+        values,
+        tokens
+      );
       cssVars.push(...categoryVars);
     });
   }
 
-  return cssVars.join('\n');
+  return cssVars.join("\n");
 }
 
 // Semantic 토큰을 TypeScript 코드로 변환
@@ -200,11 +218,11 @@ function generateSemanticConstants(
   function processNestedTokens(
     category: string,
     values: Record<string, any>,
-    prefix: string = ''
+    prefix: string = ""
   ): string {
     return Object.entries(values)
       .map(([key, value]) => {
-        if (typeof value === 'object' && !Array.isArray(value)) {
+        if (typeof value === "object" && !Array.isArray(value)) {
           // Recursively process nested objects
           return `        ${key}: {\n${processNestedTokens(
             category,
@@ -216,7 +234,7 @@ function generateSemanticConstants(
           return `        ${key}: 'var(--${CONFIG.variablePrefix}-color-semantic-${category}-${prefix}${key})',`;
         }
       })
-      .join('\n');
+      .join("\n");
   }
 
   // Create top-level color object
@@ -225,7 +243,7 @@ function generateSemanticConstants(
       const tokenEntries = processNestedTokens(category, values);
       return `    ${category}: {\n${tokenEntries}\n    },`;
     })
-    .join('\n\n');
+    .join("\n\n");
 
   return `export const Color = {\n${colorCategories}\n};\n`;
 }
@@ -235,59 +253,67 @@ function generateTokenConstants(
   category: string,
   values: Record<string, any>
 ): string {
-  if (category === 'typography') {
+  if (category === "typography") {
     // Handle typography specially - it needs nested object structure
     const typographyEntries = Object.entries(values)
       .map(([typeName, typeProps]) => {
         // Create entries for each typography style
         const propEntries = Object.entries(typeProps as Record<string, any>)
-          .map(([propName, _]) => 
-            `        ${propName}: 'var(--${CONFIG.variablePrefix}-${category}-${typeName}-${propName})',`
+          .map(
+            ([propName, _]) =>
+              `        ${propName}: 'var(--${CONFIG.variablePrefix}-${category}-${typeName}-${propName})',`
           )
-          .join('\n');
-        
+          .join("\n");
+
         return `    ${typeName}: {\n${propEntries}\n    },`;
       })
-      .join('\n\n');
-    
-    return `export const ${firstLetterToUpperCase(category)} = {\n${typographyEntries}\n};`;
+      .join("\n\n");
+
+    return `export const ${firstLetterToUpperCase(
+      category
+    )} = {\n${typographyEntries}\n};`;
   } else {
     // Handle regular flat token structures
     const tokenEntries = Object.entries(values)
-      .map(([key, _]) => 
-        `    ${key}: 'var(--${CONFIG.variablePrefix}-${category}-${key})',`
+      .map(
+        ([key, _]) =>
+          `    ${key}: 'var(--${CONFIG.variablePrefix}-${category}-${key})',`
       )
-      .join('\n');
+      .join("\n");
 
-    return `export const ${firstLetterToUpperCase(category)} = {\n${tokenEntries}\n};`;
+    return `export const ${firstLetterToUpperCase(
+      category
+    )} = {\n${tokenEntries}\n};`;
   }
 }
 
 try {
   // CSS 파일 생성
-  let cssContent = '/* Auto-generated. Do not modify directly. */\n\n';
+  let cssContent = "/* Auto-generated. Do not modify directly. */\n\n";
 
   // Foundation and base tokens
-  cssContent += ':root {\n';
+  cssContent += ":root {\n";
   cssContent += generateFoundationCSSVariables(tokenContent);
-  cssContent += '\n\n';
+  cssContent += "\n\n";
 
   // Light theme semantic tokens (default theme)
-  cssContent += '    /* Light Theme Semantic Tokens */\n';
+  cssContent += "    /* Light Theme Semantic Tokens */\n";
   cssContent += generateLightThemeVariables(tokenContent);
-  cssContent += '\n}\n\n';
+  cssContent += "\n}\n\n";
 
   // Dark theme
   cssContent += '[data-theme="dark"] {\n';
-  cssContent += '    /* Dark Theme Semantic Tokens */\n';
+  cssContent += "    /* Dark Theme Semantic Tokens */\n";
   cssContent += generateDarkThemeVariables(tokenContent);
-  cssContent += '\n}\n';
+  cssContent += "\n}\n";
 
+  // Ensure the CSS output directory exists before writing the file
   ensureDirectoryExists(CONFIG.output.css);
   fs.writeFileSync(CONFIG.output.css, cssContent);
-  console.log('✅ 모든 디자인 토큰의 CSS 파일이 생성되었습니다.');
+  console.log("✅ 모든 디자인 토큰의 CSS 파일이 생성되었습니다.");
 
   // Constants 파일 생성
+  // Ensure the constants directory exists first
   ensureDirectoryExists(CONFIG.output.constants);
 
   // Semantic color constants (theme-aware)
@@ -295,25 +321,26 @@ try {
     const semanticConstants = generateSemanticConstants(
       tokenContent.color.semantic.light
     );
-    fs.writeFileSync(
-      `${CONFIG.output.constants}/semanticColors.ts`,
-      semanticConstants
+    const semanticColorsPath = path.join(
+      CONFIG.output.constants,
+      "semanticColors.ts"
     );
-    console.log('✅ Semantic Color 상수 파일이 생성되었습니다.');
+    // No need to call ensureDirectoryExists again since we already created the constants directory
+    fs.writeFileSync(semanticColorsPath, semanticConstants);
+    console.log("✅ Semantic Color 상수 파일이 생성되었습니다.");
   }
 
   // Generate constants for other token types (spacing, typography, etc.)
   Object.entries(tokenContent).forEach(([category, values]) => {
-    if (category !== 'color' && typeof values === 'object') {
-      if (!('semantic' in values)) {
+    if (category !== "color" && typeof values === "object") {
+      if (!("semantic" in values)) {
         const constants = generateTokenConstants(
           category,
           values as Record<string, any>
         );
-        fs.writeFileSync(
-          `${CONFIG.output.constants}/${category}.ts`,
-          constants
-        );
+        const filePath = `${CONFIG.output.constants}/${category}.ts`;
+        ensureDirectoryExists(path.dirname(filePath));
+        fs.writeFileSync(filePath, constants);
         console.log(
           `✅ ${firstLetterToUpperCase(category)} 상수 파일이 생성되었습니다.`
         );

@@ -6,7 +6,7 @@
   "private": false,
   "scripts": {
     "prepare": "husky",
-    "build:token": "npx tsx packages/react/scripts/generateToken.ts"
+    "build:token": "npx tsx packages/core/scripts/generateToken.ts"
   },
   "keywords": [
     "creative",
@@ -27,7 +27,7 @@
   "contributors": [],
   "licenses": [
     {
-      "type": "MIT",
+      "type": "BSD-3-Clause",
       "url": "https://opensource.org/licenses/MIT"
     }
   ],
