@@ -3,7 +3,7 @@ name: 'build DS token when token.json file changes'
 on:
   push:
     paths:
-      - 'packages/react/src/token/token.json'
+      - 'packages/core/src/token/token.json'
     branches: [main]
 
 jobs:
